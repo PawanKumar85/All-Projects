@@ -1,0 +1,26 @@
+/* styles.css */
+
+body {
+    font-family: Arial, sans-serif; /* Set a clean, modern font */
+    background-color: #f0f0f0; /* Light grey background */
+    margin: 0; /* Remove default margin */
+    padding: 20px; /* Add some padding */
+}
+
+h1 {
+    color: #333; /* Dark grey for headings */
+    text-align: center; /* Center the heading */
+}
+
+#message {
+    background-color: #fff; /* White background for message area */
+    border: 1px solid #ccc; /* Light grey border */
+    border-radius: 5px; /* Rounded corners */
+    padding: 15px; /* Padding inside the message area */
+    margin-top: 20px; /* Space above the message area */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    max-width: 600px; /* Max width for message area */
+    margin-left: auto; /* Center horizontally */
+    margin-right: auto; /* Center horizontally */
+    white-space: pre-wrap; /* Preserve whitespace for messages */
+}

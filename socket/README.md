@@ -14,3 +14,8 @@
 - connect_error
 - connect_timeout
 - reconnect
+
+# Broadcasting
+
+- Users can see how many users are connected.
+- If user connect,then we well shown an welcome message to user, and user can see how many users are connected.

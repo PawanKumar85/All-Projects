@@ -26,29 +26,24 @@ app.get("/", (req, res) => {
   res.sendFile("index.html", { root: __dirname });
 });
 
+let users = 0;
+
 // Handle socket.io connections
 io.on("connection", (socket) => {
   console.log("A user connected");
+  users++;
 
-  setTimeout(() => {
-    // event is prev-define
-    // socket.send("Welcome to Socket.io!!!")
-    // You have two ways to create and handle custom events in socket.io.
-    // 1. Custom event create on server side and catch on client side.
-    // 2. Custom event create on client side and catch on server side.
-    // Now time to create your own custom event in socket.io
-    // socket.emit(eventName, object);
-    socket.emit("myCustomeEvent", {
-      descreption: "Welcome to Socket.io,Custom Event",
-    });
-  }, 3000);
+  // Emit welcome message to the new user
+  socket.emit("newUserConnect", { message: "Welcome Back! Dear" });
 
-  // socket.io("myCustomEvent", function (data) {
-  //   console.log(data);
-  // });
-  // Add specific event listeners if needed
+  // Broadcast to other users about the new user
+  socket.broadcast.emit("newUserConnect", { message: `${users} online` });
+
+  // Handle user disconnection
   socket.on("disconnect", () => {
     console.log("A user disconnected");
+    users--;
+    socket.broadcast.emit("newUserConnect", { message: `${users} online` });
   });
 });
 
