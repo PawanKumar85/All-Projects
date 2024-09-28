@@ -1,28 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Socket</title>
-    <link rel="stylesheet" href="styles.css"> <!-- Link to the CSS file -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.2/socket.io.js"
-            integrity="sha512-VJ6+sp2E5rFQk05caiXXzQd1wBABpjEj1r5kMiLmGAAgwPItw1YpqsCCBtq8Yr1x6C49/mTpRdXtq8O2RcZhlQ=="
-            crossorigin="anonymous"
-            referrerpolicy="no-referrer"></script>
-</head>
-<body>
-    <h1>Welcome to Socket.io</h1> <!-- Added a heading -->
+    <link rel="stylesheet" href="styles.css" />
+    <!-- Link to the CSS file -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.2/socket.io.js"
+      integrity="sha512-VJ6+sp2E5rFQk05caiXXzQd1wBABpjEj1r5kMiLmGAAgwPItw1YpqsCCBtq8Yr1x6C49/mTpRdXtq8O2RcZhlQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+  </head>
+  <body>
+    <h1>Welcome to Socket.io</h1>
+    <!-- Added a heading -->
     <div id="message"></div>
 
     <script>
-        const socket = io();
+      const socket = io("/admin");
 
-        // Listen for the "newUserConnect" event from the server
-        socket.on("newUserConnect", (data) => {
-            // Update the message div with the received message
-            const messageDiv = document.getElementById("message");
-            messageDiv.innerText += data.message + "\n";
-        });
+      // Listen for the "newUserConnect" event from the server
+      socket.on("newUserConnect", (data) => {
+        // Update the message div with the received message
+        document.getElementById("message").innerHTML = "";
+        const messageDiv = document.getElementById("message");
+        messageDiv.innerText += data.message + "\n";
+      });
     </script>
-</body>
+  </body>
 </html>

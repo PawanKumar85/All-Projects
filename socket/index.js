@@ -29,7 +29,9 @@ app.get("/", (req, res) => {
 let users = 0;
 
 // Handle socket.io connections
-io.on("connection", (socket) => {
+// add path to socket.io (namespace)
+let customPath = io.of("/admin");
+customPath.on("connection", (socket) => {
   console.log("A user connected");
   users++;
 

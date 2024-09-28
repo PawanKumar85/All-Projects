@@ -19,3 +19,8 @@
 
 - Users can see how many users are connected.
 - If user connect,then we well shown an welcome message to user, and user can see how many users are connected.
+
+# Namespaces
+
+- what is namespace in socket.io ?
+- How to create or use namespace ?
