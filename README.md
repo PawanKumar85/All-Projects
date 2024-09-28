@@ -19,7 +19,7 @@ By leveraging these technologies, I have been able to create seamless applicatio
 
 ## Portfolio Website
 
-You can view my complete portfolio and more projects at: [Your Portfolio Website](https://pawan-portfolio-psi.vercel.app/)
+You can view my complete portfolio and more projects at: [Portfolio](https://pawan-portfolio-psi.vercel.app/)
 
 ## Learning and Growth
 
