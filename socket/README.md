@@ -8,7 +8,6 @@ Socket.io is a library that enables real-time, bidirectional, and event-based co
 - `Rooms and Namespaces`: Rooms allow grouping sockets, and namespaces allow different paths for different modules in your application.
 - `Event-Driven Model`: Communication happens via events. You can emit events from both client and server and listen for specific events.
 
-
 ## What are server side events in socket.io ?
 
 - connection
@@ -42,3 +41,14 @@ Socket.io is a library that enables real-time, bidirectional, and event-based co
 - How to create or use room ?
 - create a simple room ?
 - how to create a multi-room with their limit ?
+
+## Error handling
+
+- connection_failed
+- reconnecting
+- reconnect_failed
+
+## How to connect client socket.io to multiple servers ?
+
+
+
