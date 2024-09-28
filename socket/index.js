@@ -1,10 +1,8 @@
 import express from "express";
 import path from "path";
 import dotenv from "dotenv";
-
 import { createServer } from "http";
 import { fileURLToPath } from "url";
-
 import { Server } from "socket.io";
 
 dotenv.config();
@@ -26,26 +24,39 @@ app.get("/", (req, res) => {
   res.sendFile("index.html", { root: __dirname });
 });
 
-let users = 0;
+// Keep track of rooms
+let roomNo = 1;
+let limit = 0;
 
-// Handle socket.io connections
-// add path to socket.io (namespace)
-let customPath = io.of("/admin");
-customPath.on("connection", (socket) => {
+io.on("connection", (socket) => {
   console.log("A user connected");
-  users++;
 
-  // Emit welcome message to the new user
-  socket.emit("newUserConnect", { message: "Welcome Back! Dear" });
+  // Add the user to a specific room
+  socket.join(`room-${roomNo}`);
+  limit++;
 
-  // Broadcast to other users about the new user
-  socket.broadcast.emit("newUserConnect", { message: `${users} online` });
+  if(limit >= 2){
+    limit = 0;
+    roomNo++;
+  }
+  console.log(`User joined room-${roomNo}`);
+
+  // Emit to everyone in the room including the user
+  io.to(`room-${roomNo}`).emit(
+    "connectedRoom",
+    `You are now connected to room-${roomNo}`
+  );
+
+  // If you want to limit room size, you can add logic here to increment roomNo
+  // For example, you can set a limit of 5 users per room:
+  // if (io.sockets.adapter.rooms.get(`room-${roomNo}`).size >= 5) {
+  //   roomNo++;
+  // }
 
   // Handle user disconnection
   socket.on("disconnect", () => {
     console.log("A user disconnected");
-    users--;
-    socket.broadcast.emit("newUserConnect", { message: `${users} online` });
+    // Optionally handle room-related logic on disconnect if needed
   });
 });
 

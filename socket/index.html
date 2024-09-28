@@ -14,20 +14,30 @@
     ></script>
   </head>
   <body>
-    <h1>Welcome to Socket.io</h1>
-    <!-- Added a heading -->
+    <p>Welcome to Socket.io</p>
+    <!-- Add a div to display messages from the server -->
     <div id="message"></div>
 
     <script>
-      const socket = io("/admin");
+      const socket = io();
 
-      // Listen for the "newUserConnect" event from the server
-      socket.on("newUserConnect", (data) => {
-        // Update the message div with the received message
-        document.getElementById("message").innerHTML = "";
-        const messageDiv = document.getElementById("message");
-        messageDiv.innerText += data.message + "\n";
+      socket.on("connect_failed", () => {
+        alert("Socket connection failed");
       });
+
+      socket.on("reconnecting", () => {
+        alert("Reconnecting to the server");
+      });
+
+      socket.on("reconnect_failed", () => {
+        alert("Failed to reconnect to the server");
+      });
+      // Listen for the "connectedRoom" event from the server
+      // socket.on("connectedRoom", (message) => {
+      //   // Update the message div with the received message
+      //   const messageDiv = document.getElementById("message");
+      //   messageDiv.textContent = message;
+      // });
     </script>
   </body>
 </html>
