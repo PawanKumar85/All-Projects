@@ -30,6 +30,22 @@ app.get("/", (req, res) => {
 io.on("connection", (socket) => {
   console.log("A user connected");
 
+  setTimeout(() => {
+    // event is prev-define
+    // socket.send("Welcome to Socket.io!!!")
+    // You have two ways to create and handle custom events in socket.io.
+    // 1. Custom event create on server side and catch on client side.
+    // 2. Custom event create on client side and catch on server side.
+    // Now time to create your own custom event in socket.io
+    // socket.emit(eventName, object);
+    socket.emit("myCustomeEvent", {
+      descreption: "Welcome to Socket.io,Custom Event",
+    });
+  }, 3000);
+
+  // socket.io("myCustomEvent", function (data) {
+  //   console.log(data);
+  // });
   // Add specific event listeners if needed
   socket.on("disconnect", () => {
     console.log("A user disconnected");
@@ -37,8 +53,10 @@ io.on("connection", (socket) => {
 });
 
 // Error handling for server
-http.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-}).on("error", (err) => {
-  console.error(`Failed to start server: ${err.message}`);
-});
+http
+  .listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+  })
+  .on("error", (err) => {
+    console.error(`Failed to start server: ${err.message}`);
+  });

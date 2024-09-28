@@ -12,9 +12,20 @@
     ></script>
   </head>
   <body>
-    <p>Hello,I am Socket.io</p>
+    <p>Hello, I am Socket.io</p>
+    <div id="message"></div>
+
     <script>
-        const socket = io();
+      const socket = io();
+
+      // Listen for the "message" event from the server
+
+      // when client receives the "message" event from the server
+      socket.on("myCustomeEvent", (data) => {
+        document.write(data.descreption);
+      });
+
+      // socket.emit("myCustomEvent", "This is a custom event");
     </script>
   </body>
 </html>
