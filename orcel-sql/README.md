@@ -219,3 +219,187 @@ create table Emp(
   ```bash
     select * from table-name;
   ```
+
+## TCL (Transaction Control Language)
+
+- It controls the transaction of the database,it has three commands.
+
+1. Commit
+
+  ```bash
+    commit;
+  ```
+
+2. Rollback
+
+  ```bash
+    rollback;
+  ```
+
+3. Savepoint
+
+## Where Clause
+
+- where clause restricted the records means those records are unmatched in where clause condition,eliminated from the table.
+
+- Use of where clause:
+  - Select
+  - Delete
+  - Update
+
+## Operators
+
+- Operator are some character or keyword which is  use on an expression solve any operator.
+
+The Operator of SQL can be Categorized into 3 types:
+
+1. Unary operator
+  (+,-,++,--,!)
+2. Binary operator
+    - Arithmetic operator
+      - Concatination Operator
+      - Relational Operator
+      - Logical Operator
+      - Another Relational Operator (V.V.I)
+          - Distinct
+            - It allow to retrieve unique records from the table
+
+              ```bash
+              select distinct * from table-name
+              ```
+
+          - All
+            - It retieve all the information about the table including duplicate records also.
+
+              ```bash
+              select all * from table-name
+              ```
+
+          - In
+            - It used to retrieve more than one record of the table.
+
+              ```bash
+              select * from Emp where Eid in(10,50,70);
+              ```
+
+          - Not In
+            - It is used to retrieve unselected records from the table.
+
+              ```bash
+              select * from Emp where Eid not in(10,50,70);
+              ```
+
+          - between
+            - It is used to retrieve records of table between 2 ranges.
+
+              ```bash
+              select * from Emp where Eid between 10 and 50;
+              ```
+
+          - Like
+            - Like Operater is used to retrive pattern wise information from a table. It contain two wild card character
+                - `% (module)`
+                  - Zero or more character
+
+                    ```bash
+                      select * from Emp where Ename like 'r%';
+                    ```
+
+                - `_ (underscore)`
+                  - Only for single character
+
+                  ```bash
+                    select * from Emp where Ename like '_n%';
+                  ```
+
+          - Not Like
+            - Display unselected records
+
+              ```bash
+                select * from Emp where Ename not like 'r%'; 
+                select * from Emp where Ename not like '_n%'; 
+              ```
+
+3. Set operator
+    - Union operator
+    - Union all
+    - minus
+    - intersect
+
+## Set Operations
+
+- Set operator allows us to perform algebric operations among two or more table or relation and produces a result depending on the operator.
+
+- This operator contains for different operations they are :
+  1. Union
+
+      ```bash
+        select * from table1 union select * from table2;
+      ```
+
+      `** Show only distinct records`
+
+  2. Union All
+
+      ```bash
+        select * from table1 union all select * from table2; 
+      ```
+
+      `** Show all records including duplicates also.`
+
+  3. Intersect `(A U B)`
+
+      ```bash
+        select * from table1 intersect select * from table2
+      ```
+
+      `** Show all unique records in both the table.`
+
+  4. Minus
+      - `(A - B) shows only A`
+
+      ```bash
+        select * from table1 minus select * from table2
+      ```
+
+## Alias
+
+- SQL alias is used to give a temporary name of table or column.
+- We can use Alias
+  - Column Alias
+
+    ```bash
+      select columnName as aliasName from tableName;
+    ```
+
+  - Table Alias
+
+    ```bash
+      select columnName from tableName as aliasName;
+      select Ename,Saddress from Emp E,Student S where E.Eid = S.Sid;
+    ```
+
+## Contraint
+
+- Contraint are the "business logic/rule" which allow us to maintain proper data inside the table.
+
+- In Oracle the Integrity constraint classified into 3-groups
+  - Domain Integrity Containts
+    - default
+    - Not Null
+    - check
+
+  - Entity Integrity Containt
+    - Unique Key
+    - Primary Key
+  
+  - Referential Integrity Containt
+    - Foreign Key
+
+    ```Note :-
+      1. We Can impose integrity Containt inside the table during the time of table creation and by the help of ALTER command
+      
+      2.During the time of table creation we can apply constraint by two different ways:
+         2.1 Column Level (In-line Constraint)
+         2.2 Table Level (Out-of-line Constraint)
+      ```
