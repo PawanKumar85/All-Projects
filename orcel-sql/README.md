@@ -379,15 +379,25 @@ The Operator of SQL can be Categorized into 3 types:
       select Ename,Saddress from Emp E,Student S where E.Eid = S.Sid;
     ```
 
-## Contraint
+## Contraint (*Important*)
 
 - Contraint are the "business logic/rule" which allow us to maintain proper data inside the table.
 
 - In Oracle the Integrity constraint classified into 3-groups
-  - Domain Integrity Containts
-    - default
-    - Not Null
-    - check
+  - Domain Integrity Containts  
+    - The domain Integrity constraint allow us to insert permissionable values on a column.
+  
+      - Default
+        - It we impose a default constraint along with a column than that column restrict to insert the "implicit NULL" values and behalf of NULL value it substitute default value.
+
+            -- Note : This contraint is only apply on single column.
+
+          ![alt text](image-14.png)
+
+      - Not Null
+
+      - Check
+        - Check Constraint allow us to insert selected values in a column. The check constraint only applies on single column. It can be impose table level and column level.
 
   - Entity Integrity Containt
     - Unique Key
@@ -403,3 +413,15 @@ The Operator of SQL can be Categorized into 3 types:
          2.1 Column Level (In-line Constraint)
          2.2 Table Level (Out-of-line Constraint)
       ```
+
+## what is Entity Integrity Containt ?
+
+- Entity Integrity Containt allows us to insert unique values on a column.
+- Types
+  - 1.1 Unique Contraint
+    - Unique constraint restrict to insert duplicate values on a column but it allows NULL values.
+    - It can be define in one column or multiple columns.(composite key).
+
+  - 1.2 Primary Key Contraint
+    - Primary Key Contraint restrict to insert duplicate values on a column as well as NULL values.
+    - Unlike unique contraint each table contain only one primary key column.

@@ -1,0 +1,24 @@
+{
+  "name": "orcel-sql",
+  "version": "1.0.0",
+  "description": "- Oracle is a powerfull relational database software developed by \"Larry Ellison and his friend\" bob miner & ED oats in the year of 1977 at software development lab(SDL).",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "type": "module",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.21.0",
+    "nodemon": "^3.1.7",
+    "oracledb": "^6.6.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "@types/oracledb": "^6.5.1"
+  }
+}
