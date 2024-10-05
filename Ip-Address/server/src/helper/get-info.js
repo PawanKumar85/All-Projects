@@ -1,5 +1,5 @@
 // helper/get-info.js
-import fetch from 'node-fetch';
+import fetch from "node-fetch";
 
 // Function to fetch location data based on IP
 export const getDeviceLocation = async (ip) => {
@@ -16,7 +16,7 @@ export const getDeviceLocation = async (ip) => {
   ];
 
   // Check if the IP is in the reserved range
-  if (reservedRanges.some(regex => regex.test(ip))) {
+  if (reservedRanges.some((regex) => regex.test(ip))) {
     // console.warn("Attempted to fetch location for a reserved IP:", ip);
     return {
       ipAddress: ip,
@@ -25,7 +25,7 @@ export const getDeviceLocation = async (ip) => {
       location: {
         city: "Localhost",
         region: "N/A",
-        zip: "N/A",
+        pin: "N/A",
         country: "N/A",
       },
       coordinates: {
@@ -41,7 +41,7 @@ export const getDeviceLocation = async (ip) => {
     const data = await response.json();
 
     // Check if the API call was successful
-    if (data.status === 'fail') {
+    if (data.status === "fail") {
       throw new Error(`Failed to fetch location: ${data.message}`);
     }
 
@@ -53,7 +53,7 @@ export const getDeviceLocation = async (ip) => {
       location: {
         city: data.city,
         region: data.regionName,
-        zip: data.zip,
+        pin: data.zip,
         country: data.country,
       },
       coordinates: {

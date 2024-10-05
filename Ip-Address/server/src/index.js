@@ -18,6 +18,23 @@ const getCurrentDateTime = () => {
   };
 };
 
+app.get("/", (req, res) => {
+  // Constructing the current URI using req object
+  const currentURI = `${req.protocol}://${req.get("host")}${req.originalUrl}`;
+
+  return res.status(200).json({
+    message: "Welcome to the IP Address API",
+    author: "Pawan Kumar",
+    getResponse: `${currentURI}api/v2`,
+    source:
+      "https://github.com/PawanKumar85/All-Projects/blob/main/Ip-Address/server/src/index.js",
+    version: "2.0.0",
+    current_datetime: getCurrentDateTime(), // Date and Time as separate objects
+    server_time: new Date().toISOString(), // Date and Time in ISO 8601 format
+    status: "success",
+  });
+});
+
 // Root route to get the client's browser, device, and location info
 app.get("/api/v2", async (req, res) => {
   const ip =
@@ -51,7 +68,7 @@ app.get("/api/v2", async (req, res) => {
     };
 
     // Send combined info as JSON response
-    res.json({ combinedInfo});
+    res.json({ combinedInfo });
   } catch (error) {
     console.error("Error:", error.message);
     res.status(500).json({ error: "Failed to fetch device info" });
