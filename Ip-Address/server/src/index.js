@@ -1,24 +1,59 @@
-import express from "express";
-import { getClientIp } from "./helper/get-ip.js";
+import express from 'express';
+import useragent from 'express-useragent'; // Middleware to parse user agent
+import { getDeviceLocation } from './helper/get-info.js';
 
 const app = express();
 const PORT = 5000;
 
-// Trust proxy headers (required for getting correct client IP behind proxies like Vercel)
-app.set("trust proxy", true);
+// Use user-agent middleware to extract browser and platform information
+app.use(useragent.express());
 
-// Root route
-app.get("/", (req, res) => {
-  const ip = getClientIp(req);
-  res.json({
-    message: "My IP address",
-    ip: `My IP address is ${ip}`,
-  });
+// Function to get current date and time
+const getCurrentDateTime = () => {
+  const now = new Date();
+  return {
+    date: now.toLocaleDateString(), // Format: MM/DD/YYYY
+    time: now.toLocaleTimeString(),  // Format: HH:MM:SS AM/PM
+  };
+};
+
+// Root route to get the client's browser, device, and location info
+app.get("/", async (req, res) => {
+  try {
+    // Get browser and platform info from the user-agent header
+    const browserInfo = {
+      browser: req.useragent.browser,
+      version: req.useragent.version,
+      platform: req.useragent.platform,
+      os: req.useragent.os,
+      userAgent: req.useragent.source,
+    };
+
+    // Get the location based on the IP address
+    const locationInfo = await getDeviceLocation();
+
+    if (!locationInfo) {
+      throw new Error('Failed to retrieve location data');
+    }
+
+    // Combine the browser, location info, and current date/time
+    const combinedInfo = {
+      browserInfo,
+      locationInfo,
+      currentDateTime: getCurrentDateTime(), // Date and Time as separate objects
+    };
+
+    // Send combined info as JSON response
+    res.json(combinedInfo);
+  } catch (error) {
+    console.error("Error:", error.message);
+    res.status(500).json({ error: 'Failed to fetch device info' });
+  }
 });
 
+// Start server
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`); // Log the server's port
+  console.log(`Server running on port ${PORT}`);
 });
 
-// Export the app for Vercel as a serverless function
 export default app;
