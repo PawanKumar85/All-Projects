@@ -17,7 +17,6 @@ export const getDeviceLocation = async (ip) => {
 
   // Check if the IP is in the reserved range
   if (reservedRanges.some((regex) => regex.test(ip))) {
-    // console.warn("Attempted to fetch location for a reserved IP:", ip);
     return {
       ipAddress: ip,
       mobileAccess: false,

@@ -1,82 +1,15 @@
-// server.js
 import express from "express";
-import useragent from "express-useragent"; // Middleware to parse user agent
-import { getDeviceLocation } from "./helper/get-info.js"; // Import the helper function
+import useragent from "express-useragent"; 
+import ipRoutes from "./routes/ip.routes.js"
 
 const app = express();
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 
-// Use user-agent middleware to extract browser and platform information
 app.use(useragent.express());
 
-// Function to get current date and time
-const getCurrentDateTime = () => {
-  const now = new Date();
-  return {
-    date: now.toLocaleDateString(), // Format: MM/DD/YYYY
-    time: now.toLocaleTimeString(), // Format: HH:MM:SS AM/PM
-  };
-};
+app.use("/api/v2",ipRoutes)
 
-app.get("/", (req, res) => {
-  // Constructing the current URI using req object
-  const currentURI = `${req.protocol}://${req.get("host")}${req.originalUrl}`;
-
-  return res.status(200).json({
-    message: "Welcome to the IP Address API",
-    author: "Pawan Kumar",
-    getResponse: `${currentURI}api/v2`,
-    source:
-      "https://github.com/PawanKumar85/All-Projects/blob/main/Ip-Address/server/src/index.js",
-    version: "2.0.0",
-    status: "success",
-  });
-});
-
-// Root route to get the client's browser, device, and location info
-app.get("/api/v2", async (req, res) => {
-  const ip =
-    req.headers["cf-connecting-ip"] || // Cloudflare
-    req.headers["x-real-ip"] || // Nginx
-    req.headers["x-forwarded-for"]?.split(",")[0] || // Other proxies (taking the first IP in case of multiple)
-    req.socket.remoteAddress;
-
-  try {
-    // Get browser and platform info from the user-agent header
-    const browserInfo = {
-      browser: req.useragent.browser,
-      version: req.useragent.version,
-      platform: req.useragent.platform,
-      os: req.useragent.os,
-      userAgent: req.useragent.source,
-    };
-
-    // Get the location based on the IP address
-    const locationInfo = await getDeviceLocation(ip);
-
-    if (!locationInfo) {
-      throw new Error("Failed to retrieve location data");
-    }
-
-    // Combine the browser, location info, and current date/time
-    const combinedInfo = {
-      browserInfo,
-      locationInfo,
-      currentDateTime: getCurrentDateTime(), // Date and Time as separate objects
-    };
-
-    // Send combined info as JSON response
-    res.json({ combinedInfo });
-  } catch (error) {
-    console.error("Error:", error.message);
-    res.status(500).json({ error: "Failed to fetch device info" });
-  }
-});
-
-// Start server
+// Start the server
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log(`Server is running on http://localhost:${PORT}`);
 });
-
-// Export the app for Vercel deployment
-export default app;
