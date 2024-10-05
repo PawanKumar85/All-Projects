@@ -29,8 +29,6 @@ app.get("/", (req, res) => {
     source:
       "https://github.com/PawanKumar85/All-Projects/blob/main/Ip-Address/server/src/index.js",
     version: "2.0.0",
-    current_datetime: getCurrentDateTime(), // Date and Time as separate objects
-    server_time: new Date().toISOString(), // Date and Time in ISO 8601 format
     status: "success",
   });
 });
