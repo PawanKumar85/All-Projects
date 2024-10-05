@@ -1,4 +1,5 @@
 import express from "express";
+import { getClientIp } from "./helper/get-ip.js";
 
 const app = express();
 const PORT = 5000;
@@ -8,15 +9,10 @@ app.set("trust proxy", true);
 
 // Root route
 app.get("/", (req, res) => {
-  const ip =
-    req.headers["cf-connecting-ip"] || // Cloudflare
-    req.headers["x-real-ip"] || // Nginx
-    req.headers["x-forwarded-for"] || // Other proxies
-    req.socket.remoteAddress; // Direct connection
-
+  const ip = getClientIp(req);
   res.json({
-    message: "Hello, World!",
-    ip: ip,
+    message: "My IP address",
+    ip: `My IP address is ${ip}`,
   });
 });
 
