@@ -19,7 +19,7 @@ const getCurrentDateTime = () => {
 };
 
 // Root route to get the client's browser, device, and location info
-app.get("/", async (req, res) => {
+app.get("/api/v2", async (req, res) => {
   const ip =
     req.headers["cf-connecting-ip"] || // Cloudflare
     req.headers["x-real-ip"] || // Nginx
