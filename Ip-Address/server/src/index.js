@@ -1,13 +1,14 @@
 import express from "express";
-import useragent from "express-useragent"; 
-import ipRoutes from "./routes/ip.routes.js"
+import useragent from "express-useragent";
+import cors from "cors";
+import ipRoutes from "./routes/ip.routes.js";
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
 app.use(useragent.express());
-
-app.use("/api/v2",ipRoutes)
+app.use(cors());
+app.use("/api/v2", ipRoutes);
 
 // Start the server
 app.listen(PORT, () => {

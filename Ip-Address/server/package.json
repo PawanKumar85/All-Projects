@@ -12,12 +12,14 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.21.0",
     "express-useragent": "^1.0.15",
     "node-fetch": "^3.3.2",
     "nodemon": "^3.1.7"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
     "@types/express-useragent": "^1.0.5"
   }
