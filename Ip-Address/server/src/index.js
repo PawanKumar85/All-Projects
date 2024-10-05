@@ -1,6 +1,7 @@
-import express from 'express';
-import useragent from 'express-useragent'; // Middleware to parse user agent
-import { getDeviceLocation } from './helper/get-info.js';
+// server.js
+import express from "express";
+import useragent from "express-useragent"; // Middleware to parse user agent
+import { getDeviceLocation } from "./helper/get-info.js"; // Import the helper function
 
 const app = express();
 const PORT = 5000;
@@ -13,12 +14,20 @@ const getCurrentDateTime = () => {
   const now = new Date();
   return {
     date: now.toLocaleDateString(), // Format: MM/DD/YYYY
-    time: now.toLocaleTimeString(),  // Format: HH:MM:SS AM/PM
+    time: now.toLocaleTimeString(), // Format: HH:MM:SS AM/PM
   };
 };
 
 // Root route to get the client's browser, device, and location info
 app.get("/", async (req, res) => {
+  const ip =
+    req.headers["cf-connecting-ip"] || // Cloudflare
+    req.headers["x-real-ip"] || // Nginx
+    req.headers["x-forwarded-for"]?.split(",")[0] || // Other proxies (taking the first IP in case of multiple)
+    req.socket.remoteAddress;
+
+  // const ip = "152.59.176.43";
+
   try {
     // Get browser and platform info from the user-agent header
     const browserInfo = {
@@ -30,10 +39,10 @@ app.get("/", async (req, res) => {
     };
 
     // Get the location based on the IP address
-    const locationInfo = await getDeviceLocation();
+    const locationInfo = await getDeviceLocation(ip);
 
     if (!locationInfo) {
-      throw new Error('Failed to retrieve location data');
+      throw new Error("Failed to retrieve location data");
     }
 
     // Combine the browser, location info, and current date/time
@@ -44,10 +53,10 @@ app.get("/", async (req, res) => {
     };
 
     // Send combined info as JSON response
-    res.json(combinedInfo);
+    res.json({ combinedInfo, ip: ip });
   } catch (error) {
     console.error("Error:", error.message);
-    res.status(500).json({ error: 'Failed to fetch device info' });
+    res.status(500).json({ error: "Failed to fetch device info" });
   }
 });
 
@@ -56,4 +65,5 @@ app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
 
+// Export the app for Vercel deployment
 export default app;
