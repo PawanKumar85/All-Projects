@@ -8,7 +8,7 @@ export const Home = (req, res) => {
     documentation_url:
       "https://github.com/PawanKumar85/All-Projects/blob/main/Ip-Address/server/src/index.js",
     version: "2.0.0",
-    current_datetime: getCurrentDateTime(), 
+    current_datetime: getCurrentDateTime(),
     server_time: new Date().toISOString(),
     status: "success",
   });
@@ -17,7 +17,7 @@ export const Home = (req, res) => {
 export const deviceInfo = async (req, res) => {
   const ip =
     req.headers["cf-connecting-ip"] ||
-    req.headers["x-real-ip"] || 
+    req.headers["x-real-ip"] ||
     req.headers["x-forwarded-for"]?.split(",")[0] ||
     req.socket.remoteAddress;
 
@@ -36,17 +36,21 @@ export const deviceInfo = async (req, res) => {
       throw new Error("Failed to retrieve location data");
     }
 
-    const currentDateTime = new Date().toISOString();
+    const includeServerTime = req.query.includeServerTime === "true";
 
-    const combinedInfo = {
+    const deviceInfo = {
       browserInfo,
       locationInfo,
-      currentDateTime,
+      ...(includeServerTime && { serverTime: new Date().toISOString() }),
     };
 
-    res.json({ combinedInfo });
+    res.json({
+      status: 200,
+      message: "Device information fetched successfully",
+      myInfo: deviceInfo,
+    });
   } catch (error) {
     console.error("Error:", error.message);
     res.status(500).json({ error: "Failed to fetch device info" });
   }
-}
+};
