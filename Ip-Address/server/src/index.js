@@ -26,8 +26,6 @@ app.get("/", async (req, res) => {
     req.headers["x-forwarded-for"]?.split(",")[0] || // Other proxies (taking the first IP in case of multiple)
     req.socket.remoteAddress;
 
-  // const ip = "152.59.176.43";
-
   try {
     // Get browser and platform info from the user-agent header
     const browserInfo = {
@@ -53,7 +51,7 @@ app.get("/", async (req, res) => {
     };
 
     // Send combined info as JSON response
-    res.json({ combinedInfo, ip: ip });
+    res.json({ combinedInfo});
   } catch (error) {
     console.error("Error:", error.message);
     res.status(500).json({ error: "Failed to fetch device info" });
